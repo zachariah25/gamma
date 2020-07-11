@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+    backend:
+        build: data
+        command: sh -c "flask run"
+        ports:
+            - "5000:5000"
+        working_dir: /code
+        volumes:
+            - ./data/:/code
+    redis:
+        image: "redis:alpine"
+
