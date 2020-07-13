@@ -1,4 +1,4 @@
 client_secret.json
 client_id.txt
 data/client_secret
-data/__pycache__/
+*.pyc
