@@ -9,6 +9,16 @@ services:
         working_dir: /code
         volumes:
             - ./data/:/code
+        secrets:
+            - client_secret
+            - client_id
     redis:
         image: "redis:alpine"
+    #lean:
+        #image: "quantconnect/lean"
 
+secrets:
+    client_secret:
+        file: ./client_secret.json
+    client_id:
+        file: ./client_id.txt

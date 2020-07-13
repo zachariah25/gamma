@@ -1,4 +1,4 @@
 flask
 redis
 mysql-connector-python
-yfinance
+td-ameritrade-python-api 
