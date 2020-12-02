@@ -63,7 +63,11 @@ def hello():
 def getOptionsChain(symbol):
     symbol = symbol.upper()
     opt_chain = build_opt_chain(symbol)
+    
     chain = TDSession.get_options_chain(opt_chain)
+    if chain is None:
+        TDSession.login()
+        chain = TDSession.get_options_chain(opt_chain)
 
     gamma = None
     try:
@@ -78,7 +82,7 @@ def calculate_gamma(chain):
     printed = str(chain)
     print(printed[:1000])
 
-    close = chain["underlying"]["close"]
+    mark = chain["underlying"]["mark"]
 
     gamma = 0.0
     for expiry, callsAtExpiry in chain["callExpDateMap"].items():
@@ -95,7 +99,9 @@ def calculate_gamma(chain):
             for put in puts:
                 gamma -= put["gamma"] * put["openInterest"] * put["multiplier"]
 
-    return gamma * (close ** 2) * .01
+    print("gamma without close:", gamma)
+    print("close:", mark)
+    return gamma * (mark ** 2) * .01
 
 def build_opt_chain(symbol):
     return {
